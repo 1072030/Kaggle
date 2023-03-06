@@ -26,10 +26,10 @@ total_data = total_data.append(df_train)
 total_data = total_data.append(df_test)
 print(total_data.head())
 # drop(inplace=True) 對原始值進行修改
-total_data = total_data.drop("Name",axis=1)
+
 # df_y = pd.read_csv(os.getcwd()+"/train.csv",usecols=["Survived"])
 print(df_train.head())
-print(df_train.isnull().sum())
+print(df_train.isnull().sum()) # ckeck null values
 
 
 # 填補空值 
@@ -44,7 +44,7 @@ total_data["Embarked"].fillna("S",inplace=True)
 
 # clear data
 # Cabin 缺失值太多 PassengerId,Ticket,Fare 跟存活率較無關
-total_data.drop(["Cabin","PassengerId","Ticket","Fare"],axis=1,inplace=True)
+total_data.drop(["Cabin","PassengerId","Ticket","Fare","Name"],axis=1,inplace=True)
 lable_1 = LabelEncoder()
 total_data["Embarked"] = lable_1.fit_transform(total_data["Embarked"])
 
@@ -73,6 +73,8 @@ total_data.loc[total_data["Parch"]>2,"Parch"] = 2
 total_data.loc[total_data["Parch"]==0,"Parch"] = 0
 print(total_data["Parch"].value_counts())
 
+# test_data有418 所以Survived is null 有418 由此可知空值都處理完畢
+print(total_data.isnull().sum())
 
 
 
