@@ -14,6 +14,7 @@ from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
 from sklearn.neural_network import MLPClassifier
 from sklearn.preprocessing import LabelEncoder
+from sklearn import neighbors
 #讀取data
 training_data = pd.read_csv(os.getcwd()+"/train.csv")
 df_train = pd.read_csv(os.getcwd()+"/train.csv")
@@ -89,9 +90,16 @@ print(f"shape:[{df_x.shape},{df_y.shape},{test_x.shape}]")
 # 分類
 X_train, X_test, Y_train, Y_test = train_test_split(df_x,df_y,test_size=0.2,random_state=60,shuffle=True)
 print(f"測試大小:[{X_train.shape},{Y_train.shape},{X_test.shape},{Y_test.shape}]")
-# classifier
-classifier = MLPClassifier(activation='relu',solver='adam',alpha=0.0001)
+# classifier 
+# classifier = MLPClassifier(activation='relu',solver='adam',alpha=0.0001)
+
+# KNN classifier
+# n_neighbors=3 0.737 n_neighbors=4 0.754 n_neighbors=5 0.782 n_neighbors=7 0.776
+classifier = neighbors.KNeighborsClassifier(n_neighbors=5,algorithm="brute")
+
 classifier.fit(X_train,Y_train)
+print("KNeighbors Classifier:")
+# print("MPL Classifier:")
 print("訓練分數: ",classifier.score(X_train,Y_train))#訓練分數
 Y_pred = classifier.predict(X_test)
 print("測試分數: ",accuracy_score(Y_test,Y_pred))#測試分數
