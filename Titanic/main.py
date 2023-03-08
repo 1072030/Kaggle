@@ -74,7 +74,6 @@ print(f"""Parch values:\n{total_data["Parch"].value_counts()}""")
 # test_data有418 所以Survived is null 有418 由此可知空值都處理完畢
 print(total_data.head()) #check data
 print(total_data.isnull().sum()) # check null values
-print("-------------------------------------")
 # 製作train set and test set
 x = []
 y = "Survived"
@@ -93,9 +92,9 @@ print(f"測試大小:[{X_train.shape},{Y_train.shape},{X_test.shape},{Y_test.sha
 # classifier
 classifier = MLPClassifier(activation='relu',solver='adam',alpha=0.0001)
 classifier.fit(X_train,Y_train)
-print("訓練分數",classifier.score(X_train,Y_train))#訓練分數
+print("訓練分數: ",classifier.score(X_train,Y_train))#訓練分數
 Y_pred = classifier.predict(X_test)
-print("測試分數",accuracy_score(Y_test,Y_pred))#測試分數
+print("測試分數: ",accuracy_score(Y_test,Y_pred))#測試分數
 
 final_pred = classifier.predict(test_x)
 # 轉成整數格式
@@ -103,6 +102,3 @@ final_pred = final_pred.astype(int)
 
 final_set = pd.DataFrame({"PassengerId":df_test["PassengerId"],"Survived":final_pred})
 final_set.to_csv("submission.csv",index=False)
-
-
-
